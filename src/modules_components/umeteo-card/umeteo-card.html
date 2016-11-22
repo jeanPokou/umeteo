@@ -1,0 +1,60 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../data_components/umeteo-flickr.html">
+<link rel="import" href="../../shared-styles.html">
+
+<dom-module id="umeteo-card">
+    <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+          width:400px;
+      }
+      [main]{
+         //height:600px;
+          background:var(--paper-grey-500);
+      }
+      [main] paper-card{
+         // @apply(--layout-vertical);
+         // @apply(--layout-center-center);
+       width:100%;
+
+      }
+      .info{
+        background-color:red;
+      }
+      .card-cover{
+           }
+    </style>
+    <div main>
+     <paper-card image="http://media-cache-ec0.pinimg.com/736x/24/5b/fb/245bfb0d90812ba544ed8af116afa819.jpg">
+     <div class='card-content'>
+     </div>
+     </paper-card>
+     <paper-material class='info'></paper-material>
+    </div> 
+
+    <umeteo-flickr  
+          data="{{data}}"></umeteo-flickr>
+  </template>
+
+    <script>
+        Polymer(
+        {
+            is: 'umeteo-card',
+            properties:
+            {
+                data:
+                {
+                    type: Array,
+                    value:[],
+                    observer: '_dataHasChanged'
+                }
+            },
+            _dataHasChanged:function(data){
+              console.log('data' + data);
+            }
+
+        });
+    </script>
+</dom-module>

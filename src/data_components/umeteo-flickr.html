@@ -1,0 +1,49 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="umeteo-flickr">
+    <template>
+     <span> test </span>
+    <iron-ajax auto url="https://api.flickr.com/services/rest"
+      params='{"method":"flickr.photos.search", "tags":"paris", "api_key":"9d6288115d10152daefeccc6e50be4b9",
+      "tagmode":"any", "nojsoncallback":1, "per_page":"5", "page":"2"}' handle-as = "json" on-response="getData"  last-response="{{data}}"
+   ></iron-ajax>
+   </template>
+    <script>
+        Polymer(
+        {
+            is: 'umeteo-flickr',
+            properties:
+            {
+                data: Array,
+                apiKey:
+                {
+                    type: String,
+                    value: '9d6288115d10152daefeccc6e50be4b9'
+                },
+                perpage:
+                {
+                    type: Number,
+                    value: 10
+                },
+                page: {
+                    type:Number,
+                    value:1
+                },
+                tags:
+                {
+                    type: String,
+                    value: 'paris'
+                }
+
+            },
+            ready: function()
+            {
+            },
+            getData: function(evt, details)
+            {
+                console.log(evt);
+            }
+        });
+    </script>
+</dom-module>
