@@ -1,0 +1,39 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../../shared-styles.html">
+
+<dom-module id="umeteo-card">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        width:100%;
+      }
+      [main]{
+          @apply(--layout-vertical);
+          @apply(--shadow-elevation-2dp);
+          @apply(--layout-center-center);
+          height:600px;
+          width:400px;
+          background:var(--paper-grey-500);
+      }
+      .card-cover{
+       height:400px;
+       width:100%;
+       margin-top:0px;
+      }
+    </style>
+    <div main>
+      <iron-image sizing="cover" class="card-cover" src="http://media-cache-ec0.pinimg.com/736x/24/5b/fb/245bfb0d90812ba544ed8af116afa819.jpg"></iron-image> 
+     <div info>
+     </div> 
+    </div> 
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'umeteo-card'
+    });
+  </script>
+</dom-module>
