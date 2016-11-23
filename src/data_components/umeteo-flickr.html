@@ -4,8 +4,8 @@
 <dom-module id="umeteo-flickr">
     <template>
      <span> test </span>
-    <iron-ajax auto url="
-    https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=9d6288115d10152daefeccc6e50be4b9&tags=parismonument&safe_search=1&per_page=20&format=json&nojsoncallback=?" handle-as = "json" on-response="getData"  last-response="{{data}}" ></iron-ajax>
+    <iron-ajax id="umeteoFlickrAjax"
+    url="https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=9d6288115d10152daefeccc6e50be4b9&safe_search=1&per_page=20&format=json&nojsoncallback=?" handle-as = "json" on-response="getData"  last-response="{{data}}" ></iron-ajax>
    </template>
     <script>
         Polymer(
@@ -14,11 +14,11 @@
             properties:
             {
                 data: Array,
-                apiKey:
-                {
-                    type: String,
-                    value: '9d6288115d10152daefeccc6e50be4b9'
-                },
+                <!-- apiKey: -->
+                <!-- { -->
+                <!--     type: String, -->
+                <!--     value: '9d6288115d10152daefeccc6e50be4b9' -->
+                <!-- }, -->
                 perpage:
                 {
                     type: Number,
@@ -29,18 +29,16 @@
                     type: Number,
                     value: 1
                 },
-                tags:
-                {
-                    type: String,
-                    value: 'paris'
-                },
+                tags: String,
                 photos:{
                    type:Array,
                    value:[]
                 }
 
             },
-            ready: function() {},
+            ready: function() {
+               this.triggerAjax();
+            },
             getData: function(evt)
             {
 
@@ -54,6 +52,11 @@
                     });
                 }.bind(this));
                 console.log(this.photos);
+
+            },
+            triggerAjax:function(){
+               this.$.umeteoFlickrAjax.params = {'tags': this.tags};
+               this.$.umeteoFlickrAjax.generateRequest();
 
             }
         });
