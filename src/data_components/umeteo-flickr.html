@@ -5,7 +5,9 @@
     <template>
      <span> test </span>
     <iron-ajax id="umeteoFlickrAjax"
-    url="https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=9d6288115d10152daefeccc6e50be4b9&safe_search=1&per_page=20&format=json&nojsoncallback=?" handle-as = "json" on-response="getData"  last-response="{{data}}" ></iron-ajax>
+    url="https://api.flickr.com/services/rest/?method=flickr.photos.search&safe_search=0&format=json&nojsoncallback=?"
+    handle-as = "json" on-response="getPhoto" ></iron-ajax>
+
    </template>
     <script>
         Polymer(
@@ -13,16 +15,14 @@
             is: 'umeteo-flickr',
             properties:
             {
-                data: Array,
-                <!-- apiKey: -->
-                <!-- { -->
-                <!--     type: String, -->
-                <!--     value: '9d6288115d10152daefeccc6e50be4b9' -->
-                <!-- }, -->
+                apikey:
+                {
+                    type: String,
+                },
                 perpage:
                 {
                     type: Number,
-                    value: 10
+                    value: 1
                 },
                 page:
                 {
@@ -30,33 +30,49 @@
                     value: 1
                 },
                 tags: String,
-                photos:{
-                   type:Array,
-                   value:[]
+                photos:
+                {
+                    type: Array,
+                    value: []
                 }
 
             },
-            ready: function() {
-               this.triggerAjax();
+            ready: function()
+            {
+                this.triggerAjax();
             },
-            getData: function(evt)
+            getPhoto: function(evt)
             {
 
-              var photos = evt.detail.xhr.response.photos.photo;
-              photos.forEach(function(photo)
+                console.log(evt);
+
+                var photos = evt.detail.xhr.response.photos.photo;
+                photos.forEach(function(photo)
                 {
-                    this.photos.push(
+                    this.push('photos',
                     {
-                        src: 'https://farm' + photo.farm + '.staticflickr.com/' + photo.server + '/' + photo.id + '_' + photo.secret + '.jpg',
+                        src: 'https://farm' +
+                            photo.farm +
+                            '.staticflickr.com/' +
+                            photo.server + '/' +
+                            photo.id + '_' +
+                            photo.secret + '.jpg',
                         title: photo.title
                     });
+                    this.notifyPath('photos');
                 }.bind(this));
-                console.log(this.photos);
 
             },
-            triggerAjax:function(){
-               this.$.umeteoFlickrAjax.params = {'tags': this.tags};
-               this.$.umeteoFlickrAjax.generateRequest();
+            triggerAjax: function()
+            {
+                console.log(this.apikey);
+                console.log(this.tags);
+                this.$.umeteoFlickrAjax.params= {
+                  'api_key':this.apikey,
+                   'tags':this.tags,
+                   'per_page':this.perpage
+                };
+                this.$.umeteoFlickrAjax.generateRequest();
 
             }
         });

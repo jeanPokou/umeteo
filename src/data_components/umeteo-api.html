@@ -1,0 +1,67 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../../bower_components/geo-location/geo-location.html">
+<link rel="import" href="./umeteo-flickr.html">
+
+<dom-module id="umeteo-api">
+    <template>
+     <span> hello from api  </span>
+
+    <iron-ajax  id="umeteoWetherAjax" url="http://www.api.openweathermap.org/data/2.5/forecast?APPID=a880a17c16100eee834ce7ec2bad57bb"
+    handle-as = "json" on-response="getWeatherData" last-response={{weatherData}}></iron-ajax>
+   
+    <umeteo-flickr apikey = {{apikey}}
+        tags="sunny weather"
+        photos = {{photos}}></umeteo-flickr>  
+
+  <geo-location latitude="{{lat}}"
+               longitude="{{lng}}"></geo-location>
+
+   </template>
+    <script>
+        Polymer(
+        {
+            is: 'umeteo-api',
+            properties:
+            {
+                apikey:
+                {
+                    type: String,
+                },
+                perpage:
+                {
+                    type: Number,
+                    value: 1
+                },
+                page:
+                {
+                    type: Number,
+                    value: 1
+                },
+                tags: String,
+                photos:
+                {
+                    type: Array,
+                    value: []
+                },
+                lat:Number,
+                lng:Number,
+                weatherData:{
+                   type:Array,
+                   value:[]
+                }
+
+            },
+            ready: function()
+            {
+            },
+            getWeattherData:function(data){
+               console.log(weatherData);
+            },
+            triggerAjax:function(){
+               this.$.umeteoWetherAjax.params = {'lat':this.lat,'lon':this.lng};
+               this.$.umeteoWetherAjax.generateRequest();
+            }
+        });
+    </script>
+</dom-module>

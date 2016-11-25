@@ -1,6 +1,7 @@
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../../bower_components/paper-card/paper-card.html">
-<link rel="import" href="../../data_components/umeteo-flickr.html">
+<link rel="import" href="../../../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../../data_components/umeteo-api.html">
 <link rel="import" href="../../shared-styles.html">
 
 <dom-module id="umeteo-card">
@@ -20,41 +21,48 @@
        width:100%;
 
       }
+      .card-image{
+        width:100%;
+        height:250px;
+      }
       .info{
         background-color:red;
       }
       .card-cover{
            }
     </style>
+    <span> hello from card </span>
     <div main>
-     <paper-card image="http://media-cache-ec0.pinimg.com/736x/24/5b/fb/245bfb0d90812ba544ed8af116afa819.jpg">
-     <div class='card-content'>
-     </div>
-     </paper-card>
-     <paper-material class='info'></paper-material>
-    </div> 
+    <template is="dom-repeat" items="[[data]]">
+      <iron-image   class="card-image" sizing="cover" preload src="{{item.src}}"></iron-image>
+    {{item.title}}
+    </template>
 
-    <umeteo-flickr  
-      apikey="9d6288115d10152daefeccc6e50be4b9"
-        tags="abidjan monument"
-        photos = {{data}}></umeteo-flickr>
-  </template>
-
+    </div>
+    <umeteo-api apikey={{apikey}} tags="sunny" photos = {{data}}></umeteo-api>
+    </template>
     <script>
         Polymer(
         {
             is: 'umeteo-card',
             properties:
             {
+                apikey:
+                {
+                    type: String,
+                    value: '9d6288115d10152daefeccc6e50be4b9'
+                },
                 data:
                 {
                     type: Array,
-                    value:[],
+                    value: [],
                     observer: '_dataHasChanged'
                 }
             },
-            _dataHasChanged:function(data){
-              console.log('data' + data);
+            ready: function() {},
+            _dataHasChanged: function()
+            {
+                console.log(this.data);
             }
 
         });
