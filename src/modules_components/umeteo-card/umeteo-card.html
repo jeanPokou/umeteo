@@ -9,21 +9,23 @@
     <style include="shared-styles">
       :host {
         display: block;
-          width:400px;
+          width:330px;
       }
       [main]{
-         //height:600px;
-          background:var(--paper-grey-500);
+         height:550px;
+         background:var(--paper-grey-500);
+         @apply(--shadow-elevation-4dp);
+        border-radius:3px;
       }
       [main] paper-card{
          // @apply(--layout-vertical);
          // @apply(--layout-center-center);
-       width:100%;
+         width:100%;
 
       }
       .card-image{
         width:100%;
-        height:250px;
+        height:400px;
       }
       .info{
         background-color:red;
@@ -31,15 +33,14 @@
       .card-cover{
            }
     </style>
-    <span> hello from card </span>
+    <!-- <span> hello from card </span> -->
     <div main>
-    <template is="dom-repeat" items="[[data]]">
+    <template is="dom-repeat" items="[[photos]]">
       <iron-image   class="card-image" sizing="cover" preload src="{{item.src}}"></iron-image>
-    {{item.title}}
     </template>
 
     </div>
-    <umeteo-api apikey={{apikey}} tags="sunny" photos = {{data}}></umeteo-api>
+    <umeteo-api apikey={{apikey}} tags="paris monument" photos = "{{photos}}" weatherData={{weatherData}}></umeteo-api>
     </template>
     <script>
         Polymer(
@@ -52,17 +53,25 @@
                     type: String,
                     value: '9d6288115d10152daefeccc6e50be4b9'
                 },
-                data:
+                photos:
                 {
                     type: Array,
                     value: [],
-                    observer: '_dataHasChanged'
+                    observer: '_photoHasChanged'
+                },
+                weatherData:{
+                    type:Array,
+                    value:[],
+                    observer: '_weatherDataHasChanged'
                 }
             },
             ready: function() {},
-            _dataHasChanged: function()
+            _photoHasChanged: function()
             {
-                console.log(this.data);
+                console.log(this.photos);
+            },
+            _weatherDataHasChanged:function(){
+            console.log(this.weatherData);
             }
 
         });

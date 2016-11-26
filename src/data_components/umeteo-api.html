@@ -5,15 +5,15 @@
 
 <dom-module id="umeteo-api">
     <template>
-     <span> hello from api  </span>
+     <!-- <span> hello from api  </span> -->
 
     <iron-ajax  id="umeteoWetherAjax"
       url="http://api.openweathermap.org/data/2.5/forecast?APPID=a880a17c16100eee834ce7ec2bad57bb" handle-as = "json"
       on-response="getWeatherData" last-response="{{weatherData}}"
     </iron-ajax>
 
-    <umeteo-flickr apikey = {{apikey}}
-        tags="sunny weather"
+    <umeteo-flickr apikey = {{apikey}} perpage=1
+      tags={{tags}}
         photos = {{photos}}></umeteo-flickr>
 
   <geo-location latitude="{{lat}}"
@@ -35,41 +35,47 @@
                     type: Number,
                     value: 1
                 },
-                page:
-                {
-                    type: Number,
-                    value: 1
-                },
                 tags: String,
                 photos:
                 {
                     type: Array,
                     value: []
                 },
-                lat:{
-                  type:Number,
+                lat:
+                {
+                    type: Number,
                 },
-                lng:{
-                  type:Number,
+                lng:
+                {
+                    type: Number,
                 },
-                weatherData:{
-                   type:Array,
-                   value:[]
+                weatherData:
+                {
+                    type: Array,
+                    value: []
                 }
 
             },
             ready: function()
             {
-               this.$.umeteoWetherAjax.addEventListener('geo-response',function(){
-                this.triggerAjax();
-              }.bind(this));
+                this.$.umeteoWetherAjax.addEventListener(
+                    'geo-response',
+                    function()
+                    {
+                        this.triggerAjax();
+                    }.bind(this));
             },
-            getWeatherData:function(data){
-               console.log(this.weatherData);
+            getWeatherData: function(data)
+            {
+              this.notifyPath('weatherData');
             },
-            triggerAjax:function(){
-               this.$.umeteoWetherAjax.params = {'lat':this.lat,'lon':this.lng};
-               this.$.umeteoWetherAjax.generateRequest();
+            triggerAjax: function()
+            {
+                this.$.umeteoWetherAjax.params = {
+                    'lat': this.lat,
+                    'lon': this.lng
+                };
+                this.$.umeteoWetherAjax.generateRequest();
             }
         });
     </script>
