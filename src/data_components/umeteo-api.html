@@ -7,12 +7,14 @@
     <template>
      <span> hello from api  </span>
 
-    <iron-ajax  id="umeteoWetherAjax" url="http://www.api.openweathermap.org/data/2.5/forecast?APPID=a880a17c16100eee834ce7ec2bad57bb"
-    handle-as = "json" on-response="getWeatherData" last-response={{weatherData}}></iron-ajax>
-   
+    <iron-ajax  id="umeteoWetherAjax"
+      url="http://api.openweathermap.org/data/2.5/forecast?APPID=a880a17c16100eee834ce7ec2bad57bb" handle-as = "json"
+      on-response="getWeatherData" last-response="{{weatherData}}"
+    </iron-ajax>
+
     <umeteo-flickr apikey = {{apikey}}
         tags="sunny weather"
-        photos = {{photos}}></umeteo-flickr>  
+        photos = {{photos}}></umeteo-flickr>
 
   <geo-location latitude="{{lat}}"
                longitude="{{lng}}"></geo-location>
@@ -44,8 +46,12 @@
                     type: Array,
                     value: []
                 },
-                lat:Number,
-                lng:Number,
+                lat:{
+                  type:Number,
+                },
+                lng:{
+                  type:Number,
+                },
                 weatherData:{
                    type:Array,
                    value:[]
@@ -54,9 +60,12 @@
             },
             ready: function()
             {
+               this.$.umeteoWetherAjax.addEventListener('geo-response',function(){
+                this.triggerAjax();
+              }.bind(this));
             },
-            getWeattherData:function(data){
-               console.log(weatherData);
+            getWeatherData:function(data){
+               console.log(this.weatherData);
             },
             triggerAjax:function(){
                this.$.umeteoWetherAjax.params = {'lat':this.lat,'lon':this.lng};
