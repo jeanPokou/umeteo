@@ -12,10 +12,11 @@
           width:330px;
       }
       [main]{
-         height:550px;
+         height:600px;
          background:var(--paper-grey-500);
          @apply(--shadow-elevation-4dp);
-        border-radius:3px;
+         border-radius:3px;
+         position:relative;
       }
       [main] paper-card{
          // @apply(--layout-vertical);
@@ -31,16 +32,25 @@
         background-color:red;
       }
       .card-cover{
-           }
+      }
+      .temperature {
+          font-size:3em;
+          <!-- margin-bottom:70%; -->
+          margin-left:25%;
+      }
     </style>
     <!-- <span> hello from card </span> -->
     <div main>
+ <div class="temperature">
+            <span >6</span>
+        </div>
+
     <template is="dom-repeat" items="[[photos]]">
-      <iron-image   class="card-image" sizing="cover" preload src="{{item.src}}"></iron-image>
-    </template>
+        <iron-image   class="card-image" sizing="cover" preload src="{{item.src}}"></iron-image>
+           </template>
 
     </div>
-    <umeteo-api apikey={{apikey}} tags="paris monument" photos = "{{photos}}" weatherData={{weatherData}}></umeteo-api>
+    <umeteo-api apikey={{apikey}} tags="paris monument" photos = "{{photos}}" weatherData ="{{weatherData}}"></umeteo-api>
     </template>
     <script>
         Polymer(

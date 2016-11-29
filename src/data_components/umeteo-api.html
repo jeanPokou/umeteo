@@ -9,7 +9,7 @@
 
     <iron-ajax  id="umeteoWetherAjax"
       url="http://api.openweathermap.org/data/2.5/forecast?APPID=a880a17c16100eee834ce7ec2bad57bb" handle-as = "json"
-      on-response="getWeatherData" last-response="{{weatherData}}"
+      on-response="getWeatherData"
     </iron-ajax>
 
     <umeteo-flickr apikey = {{apikey}} perpage=1
@@ -65,8 +65,9 @@
                         this.triggerAjax();
                     }.bind(this));
             },
-            getWeatherData: function(data)
+            getWeatherData: function(evt)
             {
+              this.weatherData.push( evt.detail.xhr.response);
               this.notifyPath('weatherData');
             },
             triggerAjax: function()
