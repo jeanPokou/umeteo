@@ -43,7 +43,7 @@
             getPhoto: function(evt)
             {
 
-                console.log(evt);
+              //  console.log(evt);
 
                 var photos = evt.detail.xhr.response.photos.photo;
                 photos.forEach(function(photo)
@@ -58,14 +58,13 @@
                             photo.secret + '.jpg',
                         title: photo.title
                     });
-                    this.notifyPath('photos');
                 }.bind(this));
 
             },
             triggerAjax: function()
             {
-                console.log(this.apikey);
-                console.log(this.tags);
+               // console.log(this.apikey);
+               // console.log(this.tags);
                 this.$.umeteoFlickrAjax.params= {
                   'api_key':this.apikey,
                    'tags':this.tags,

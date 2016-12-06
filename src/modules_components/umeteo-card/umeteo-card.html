@@ -1,7 +1,6 @@
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../../bower_components/iron-image/iron-image.html">
-<link rel="import" href="../../data_components/umeteo-api.html">
 <link rel="import" href="../../shared-styles.html">
 
 <dom-module id="umeteo-card">
@@ -45,12 +44,10 @@
             <span >6</span>
         </div>
 
-    <template is="dom-repeat" items="[[photos]]">
-        <iron-image   class="card-image" sizing="cover" preload src="{{item.src}}"></iron-image>
+        <iron-image   class="card-image" sizing="cover" preload src="{{photo.src}}"></iron-image>
            </template>
 
     </div>
-    <umeteo-api apikey={{apikey}} tags="paris monument" photos = "{{photos}}" weatherData ="{{weatherData}}"></umeteo-api>
     </template>
     <script>
         Polymer(
@@ -58,31 +55,16 @@
             is: 'umeteo-card',
             properties:
             {
-                apikey:
+                photo:
                 {
-                    type: String,
-                    value: '9d6288115d10152daefeccc6e50be4b9'
-                },
-                photos:
-                {
-                    type: Array,
-                    value: [],
-                    observer: '_photoHasChanged'
-                },
-                weatherData:{
-                    type:Array,
-                    value:[],
-                    observer: '_weatherDataHasChanged'
+                    type: Object,
                 }
+
             },
-            ready: function() {},
-            _photoHasChanged: function()
-            {
-                console.log(this.photos);
+            ready: function() {
+                console.warn(this.photo);
             },
-            _weatherDataHasChanged:function(){
-            console.log(this.weatherData);
-            }
+
 
         });
     </script>

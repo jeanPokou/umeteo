@@ -12,7 +12,7 @@
       on-response="getWeatherData"
     </iron-ajax>
 
-    <umeteo-flickr apikey = {{apikey}} perpage=1
+    <umeteo-flickr apikey = {{apikey}} perpage=5
       tags={{tags}}
         photos = {{photos}}></umeteo-flickr>
 
@@ -67,8 +67,8 @@
             },
             getWeatherData: function(evt)
             {
-              this.weatherData.push( evt.detail.xhr.response);
-              this.notifyPath('weatherData');
+              this.push('weatherData', evt.detail.xhr.response);
+              //console.log(this.weatherData);
             },
             triggerAjax: function()
             {
