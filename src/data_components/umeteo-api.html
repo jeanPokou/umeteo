@@ -8,11 +8,11 @@
      <!-- <span> hello from api  </span> -->
 
     <iron-ajax  id="umeteoWetherAjax"
-      url="http://api.openweathermap.org/data/2.5/forecast?APPID=a880a17c16100eee834ce7ec2bad57bb" handle-as = "json"
+      url="http://api.openweathermap.org/data/2.5/weather?APPID=a880a17c16100eee834ce7ec2bad57bb" handle-as = "json"
       on-response="getWeatherData"
     </iron-ajax>
 
-    <umeteo-flickr apikey = {{apikey}} perpage=5
+    <umeteo-flickr apikey = {{apikey}} perpage={{perpage}}
       tags={{tags}}
         photos = {{photos}}></umeteo-flickr>
 
@@ -32,8 +32,7 @@
                 },
                 perpage:
                 {
-                    type: Number,
-                    value: 1
+                    type: Number
                 },
                 tags: String,
                 photos:
@@ -49,10 +48,11 @@
                 {
                     type: Number,
                 },
-                weatherData:
+                weather:
                 {
                     type: Array,
-                    value: []
+                    value: [],
+                    notify:true
                 }
 
             },
@@ -67,7 +67,7 @@
             },
             getWeatherData: function(evt)
             {
-              this.push('weatherData', evt.detail.xhr.response);
+              this.push('weather', evt.detail.xhr.response);
               //console.log(this.weatherData);
             },
             triggerAjax: function()

@@ -34,11 +34,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <div main>
     <!-- <umeteo-card></umeteo-card> -->
     <!-- <span> hello from view 1 </span> -->
-    <umeteo-card photo={{_computePhotos(photos)}} ></umeteo-card>
 
-<umeteo-api apikey={{apikey}} tags="sunny view" photos="{{photos}}" weatherData="{{weatherData}}"></umeteo-api>
-
-
+    <umeteo-api apikey={{apikey}} tags="sunny,weather,beautiful" photos="{{photos}}" id='hello' weather="[[data]]"
+    perpage=3></umeteo-api>
+    <template is="dom-repeat" items="{{photos}}"> 
+    <umeteo-card photo="{{item}}" data ="[[data]]"></umeteo-card>
+    </template>
 </div>
   </template>
 
@@ -58,28 +59,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     value: [],
                     observer: '_photoHasChanged'
                 },
-                weatherData:
-                {
-                    type: Array,
-                    value: [],
-                     observer: '_weatherDataHasChanged'
+                data:{
+                type:Array,
+                value:[]
                 }
-            },
+           },
+           ready:function(){
+             console.log(this.data);
+             //console.log(this.$.hello.weather);
+           },
            _photoHasChanged: function()
             {
-                //console.log(this.photos);
+              //console.log(this.photos);
             },
-            _weatherDataHasChanged: function(data)
-            {
-               // console.log(data);
-            },
-            _computePhotos:function(photos){
-              if(photos.length > 0){
-              console.log(photos);
-              return photos[0];
-              }
-            }
-
+          
     });
   </script>
 </dom-module>

@@ -5,7 +5,7 @@
     <template>
      <span> test </span>
     <iron-ajax id="umeteoFlickrAjax"
-    url="https://api.flickr.com/services/rest/?method=flickr.photos.search&safe_search=0&format=json&nojsoncallback=?"
+    url="https://api.flickr.com/services/rest/?method=flickr.photos.search&safe_search=1&format=json&nojsoncallback=?"
     handle-as = "json" on-response="getPhoto" ></iron-ajax>
 
    </template>
@@ -68,7 +68,8 @@
                 this.$.umeteoFlickrAjax.params= {
                   'api_key':this.apikey,
                    'tags':this.tags,
-                   'per_page':this.perpage
+                   'per_page':this.perpage,
+                   'geo_context':2
                 };
                 this.$.umeteoFlickrAjax.generateRequest();
 
