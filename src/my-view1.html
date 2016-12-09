@@ -35,9 +35,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <!-- <umeteo-card></umeteo-card> -->
     <!-- <span> hello from view 1 </span> -->
 
-    <umeteo-api apikey={{apikey}} tags="sunny,weather,beautiful" photos="{{photos}}" id='hello' weather="[[data]]"
-    perpage=3></umeteo-api>
-    <template is="dom-repeat" items="{{photos}}"> 
+    <umeteo-api apikey={{apikey}} tags="clouds,africa" photos="{{photos}}" id='hello' weather="[[data]]"
+    ></umeteo-api>
+    <template is="dom-repeat" items="{{photos}}">
     <umeteo-card photo="{{item}}" data ="[[data]]"></umeteo-card>
     </template>
 </div>
@@ -49,8 +49,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       properties:
             {
                 apikey:
-                {
-                    type: String,
+                { type: String,
                     value: '9d6288115d10152daefeccc6e50be4b9'
                 },
                 photos:
@@ -71,8 +70,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            _photoHasChanged: function()
             {
               //console.log(this.photos);
+
             },
-          
+
     });
   </script>
 </dom-module>

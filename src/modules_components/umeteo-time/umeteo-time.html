@@ -1,0 +1,59 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../../shared-styles.html">
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.js"></script>
+<dom-module id="umeteo-time">
+
+<style>
+:host{
+display:block;
+width:300px;
+height:50px;
+position:absolute;
+z-index:999;
+color:white;
+border:1px solid green;
+@apply(--layout-vertical);
+@apply(--layout-center-center);
+}
+
+[time]{
+  font-size:2.5em;
+}
+</style>
+  <template>
+  <div time>
+    <span>[[time]]</span>
+  </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'umeteo-time',
+      properties:{
+        time:{
+          type:String,
+          value:moment().format('H:mm:ss')
+        }
+
+      },
+      ready: function(){
+       var val=''; 
+        setInterval(function(){
+           this.set('time',moment().format('H:mm:ss'));
+        }.bind(this),1000);
+      }
+    });
+  </script>
+</dom-module>

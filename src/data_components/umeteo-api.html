@@ -14,7 +14,7 @@
 
     <umeteo-flickr apikey = {{apikey}} perpage={{perpage}}
       tags={{tags}}
-        photos = {{photos}}></umeteo-flickr>
+      photos ={{photos}}></umeteo-flickr>
 
   <geo-location latitude="{{lat}}"
                longitude="{{lng}}"></geo-location>
@@ -64,6 +64,7 @@
                     {
                         this.triggerAjax();
                     }.bind(this));
+                    this._processPhotos(this.photos);
             },
             getWeatherData: function(evt)
             {
@@ -72,11 +73,15 @@
             },
             triggerAjax: function()
             {
+              console.log(this.tag);
                 this.$.umeteoWetherAjax.params = {
                     'lat': this.lat,
                     'lon': this.lng
                 };
                 this.$.umeteoWetherAjax.generateRequest();
+            },
+            _processPhotos(photos){
+              console.log(photos);
             }
         });
     </script>
