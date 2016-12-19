@@ -1,10 +1,13 @@
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../../bower_components/iron-icons/communication-icons.html">
 <link rel="import" href="../../shared-styles.html">
-<link rel="import" href="../umeteo-time/umeteo-time.html" >
+<link rel="import" href="../umeteo-time/umeteo-time.html">
+
 <dom-module id="umeteo-card">
-   <template>
+    <template>
    <style include="shared-styles">
       :host {
         display: block;
@@ -19,6 +22,11 @@
          height:400px;
       }
 
+      --umeteo-time-style {
+      @apply(--layout-vertical);
+      @apply(--layout-center-center);
+      }
+
       [info]{
           height:150px;
           width:100%
@@ -29,7 +37,6 @@
       }
 
       .box .location{
-
           font-size:2.1em;
       }
 
@@ -40,38 +47,42 @@
 
        }
        .box .deg{
-           font-size:2.0em;
-          top:0px;
-          position:relative;
+    font-size: 2.0em;
+    top: 43%;
+    position: absolute;
+    margin-left: 47%;
        }
        .box{
          position:absolute;
-          top:10%;
+          top:20%;
           z-index:999;
            width:100%;
            height:250px;
           color:white;
           padding-left:25px;
-   @apply(--layout-vertical);
+         @apply(--layout-vertical);
        }
     </style>
     <!-- <span> hello from card </span> -->
 
-    <umeteo-time></umeteo-time>
+    <umeteo-time full></umeteo-time>
     <div main>
         <div class="box">
-        <div class="location">[[data.0.name]], [[data.0.sys.country]]</div>
-        <div class="weatherLabel"> [[data.0.weather.0.description]]</div>
-        <div class="temp">[[_computeTemp(data.0.main.temp)]]</div>
+        <div class="location">
+           <iron-icon icon="communication:location-on"></iron-icon>
+           [[data.0.city.name]], [[data.0.city.country]]
+        </div>
+        <div class="weatherLabel"> [[data.0.list.0.weather.0.description]]</div>
+        <div class="temp">[[_computeTemp(data.0.list.0.main.temp)]]</div>
         <span class="deg"> &deg; C </span>
-      </span> <span>[[_computeTemp(data.0.main.temp_max)]]  </span>
-      <span>[[_computeTemp(data.0.main.temp_min)]]  </span>
+      </span> <span>[[_computeTemp(data.0.list.0.main.temp_max)]]  </span>
+      <span>[[_computeTemp(data.0.list.0.main.temp_min)]]  </span>
+    <span> last updated  </span>
         </div>
           <!-- <iron-image   class="card-image" sizing="cover" preload src="http://www.parisattitude.com/images/monuments.jpg"></iron-image> -->
           <iron-image   class="card-image" sizing="cover" src="{{photo.src}}" preload  placeholder="http://www.parisattitude.com/images/monuments.jpg"></iron-image>
 <!-- src="{{photo.src}}" -->
     </div>
-
     </template>
     <script>
         Polymer(
@@ -93,15 +104,15 @@
             {
                 console.warn(this.data);
             },
-            _computeTemp:function(temp){
-               var val = '';
-               if(temp){
-               val = (Math.floor((temp-273.15) * 10) / 10);
-               }
-               return val;
+            _computeTemp: function(temp)
+            {
+                var val = '';
+                if (temp)
+                {
+                    val = (Math.floor((temp - 273.15) * 10) / 10);
+                }
+                return val;
             }
-
-
         });
     </script>
 </dom-module>

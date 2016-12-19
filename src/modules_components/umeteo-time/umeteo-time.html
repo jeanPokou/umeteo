@@ -15,45 +15,72 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.js"></script>
 <dom-module id="umeteo-time">
 
-<style>
-:host{
-display:block;
-width:300px;
-height:50px;
-position:absolute;
-z-index:999;
-color:white;
-border:1px solid green;
-@apply(--layout-vertical);
-@apply(--layout-center-center);
-}
-
-[time]{
-  font-size:2.5em;
-}
-</style>
-  <template>
+    <style>
+        :host {
+            display: block;
+            width: 500px;
+            height: 50px;
+            z-index: 999;
+            color: white;
+            @apply(--umeteo-time-style);
+        }
+        
+        [time] {
+            font-size: var (--umeteo-time-font-size, 2.5em);
+        }
+    </style>
+    <template>
   <div time>
     <span>[[time]]</span>
   </div>
   </template>
+    <script>
+        Polymer(
+        {
+            is: 'umeteo-time',
+            properties:
+            {
+                time:
+                {
+                    type: String,
+                    //value:moment().format('H:mm:ss')
+                },
+                seconds:
+                {
+                    type: Boolean,
+                    value: false
+                },
+                full:
+                {
+                    type: Boolean,
+                    value: false
+                }
 
-  <script>
-    Polymer({
-      is: 'umeteo-time',
-      properties:{
-        time:{
-          type:String,
-          value:moment().format('H:mm:ss')
-        }
+            },
+            ready: function()
+            {
+                var val = '';
+                if (this.full)
+                {
+                    format = 'dddd, MMMM D';
+                    this.set('time', moment().format(format));
+                }
+                else
+                {
+                    setInterval(function()
+                    {
+                        var format = 'H:mm';
+                        if (this.seconds)
+                        {
+                            format = 'H:mm:ss';
+                        }
+                        this.set('time', moment().format(
+                            format));
+                    }.bind(this), 1000);
 
-      },
-      ready: function(){
-       var val=''; 
-        setInterval(function(){
-           this.set('time',moment().format('H:mm:ss'));
-        }.bind(this),1000);
-      }
-    });
-  </script>
+                }
+
+            }
+        });
+    </script>
 </dom-module>
